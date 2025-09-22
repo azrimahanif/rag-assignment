@@ -1,0 +1,8 @@
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: pydantic in /usr/local/lib/python3.11/site-packages (2.11.9)
+Requirement already satisfied: pydantic-settings in /usr/local/lib/python3.11/site-packages (2.10.1)
+Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.11/site-packages (from pydantic) (0.7.0)
+Requirement already satisfied: pydantic-core==2.33.2 in /usr/local/lib/python3.11/site-packages (from pydantic) (2.33.2)
+Requirement already satisfied: typing-extensions>=4.12.2 in /usr/local/lib/python3.11/site-packages (from pydantic) (4.15.0)
+Requirement already satisfied: typing-inspection>=0.4.0 in /usr/local/lib/python3.11/site-packages (from pydantic) (0.4.1)
+Requirement already satisfied: python-dotenv>=0.21.0 in /usr/local/lib/python3.11/site-packages (from pydantic-settings) (1.0.0)

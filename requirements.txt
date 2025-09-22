@@ -1,0 +1,23 @@
+qdrant-client==1.7.0
+openai==1.30.0
+requests==2.31.0
+python-dotenv==1.0.0
+pandas==2.0.3
+pyarrow==12.0.0
+fastparquet==2023.4.0
+
+# FastAPI dependencies
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.6.0
+pydantic-settings==2.1.0
+
+# Database dependencies
+asyncpg==0.29.0
+sqlalchemy==2.0.23
+alembic==1.13.0
+
+# Additional utilities
+httpx==0.25.2
+redis==5.0.1
+python-multipart==0.0.6

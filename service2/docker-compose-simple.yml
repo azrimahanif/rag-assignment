@@ -1,0 +1,77 @@
+services:
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:v1.7.0
+    container_name: rag-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - rag-network
+
+  # FastAPI Backend Service
+  fastapi:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile-simple
+    container_name: rag-fastapi
+    ports:
+      - "8000:8000"
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_API_KEY=dev-qdrant-api-key-123
+      - OPENAI_API_KEY=dev-openai-api-key-123
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./fastapi:/app
+    depends_on:
+      - qdrant
+    networks:
+      - rag-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: rag-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - rag-network
+
+  # n8n Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: rag-n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=password123
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_API_KEY=dev-qdrant-api-key-123
+      - FASTAPI_URL=http://fastapi:8000
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - fastapi
+    networks:
+      - rag-network
+
+volumes:
+  qdrant_data:
+    driver: local
+  redis_data:
+    driver: local
+  n8n_data:
+    driver: local
+
+networks:
+  rag-network:
+    driver: bridge

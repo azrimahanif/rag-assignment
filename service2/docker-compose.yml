@@ -1,0 +1,172 @@
+version: '3.8'
+
+services:
+  # Local Opik Dashboard
+  opik:
+    image: cometml/opik:latest
+    container_name: rag-opik
+    ports:
+      - "3001:3001"  # Opik Dashboard
+    environment:
+      - OPIK_URL=http://localhost:3001
+      - POSTGRES_DB=opik
+      - POSTGRES_USER=opik
+      - POSTGRES_PASSWORD=opik_password
+    depends_on:
+      - opik-postgres
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # Opik PostgreSQL Database
+  opik-postgres:
+    image: postgres:15-alpine
+    container_name: rag-opik-postgres
+    environment:
+      - POSTGRES_DB=opik
+      - POSTGRES_USER=opik
+      - POSTGRES_PASSWORD=opik_password
+    volumes:
+      - opik_postgres_data:/var/lib/postgresql/data
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:v1.7.0
+    container_name: rag-qdrant
+    ports:
+      - "6333:6333"  # HTTP API
+      - "6334:6334"  # gRPC API
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    volumes:
+      - qdrant_data:/qdrant/storage
+      - ./qdrant/config:/qdrant/config
+    networks:
+      - rag-network
+    restart: unless-stopped
+
+  # FastAPI Backend Service
+  fastapi:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: rag-fastapi
+    ports:
+      - "8000:8000"  # FastAPI
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_API_KEY=${QDRANT_API_KEY:-your-qdrant-api-key}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your-openai-api-key}
+      - REDIS_URL=redis://redis:6379
+      - OPIK_URL=${OPIK_URL}
+      - OPIK_API_KEY=${OPIK_API_KEY}
+      - OPIK_WORKSPACE=${OPIK_WORKSPACE}
+      - OPIK_PROJECT_NAME=${OPIK_PROJECT_NAME}
+      - OPIK_ENABLED=${OPIK_ENABLED}
+    volumes:
+      - ./fastapi/app:/app/app
+      - ../data:/app/data:ro
+    depends_on:
+      - qdrant
+      - redis
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # n8n Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: rag-n8n
+    ports:
+      - "5678:5678"  # n8n Web UI
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USERNAME:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-password}
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_API_KEY=${QDRANT_API_KEY:-your-qdrant-api-key}
+      - FASTAPI_URL=http://fastapi:8000
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/home/node/.n8n/workflows
+    depends_on:
+      - fastapi
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5678/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: rag-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - rag-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  
+  # Data Migration Service (One-time execution)
+  data-migration:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: rag-data-migration
+    environment:
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_API_KEY=${QDRANT_API_KEY:-your-qdrant-api-key}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your-openai-api-key}
+    volumes:
+      - ../data:/app/data:ro
+      - ./scripts:/app/scripts
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    networks:
+      - rag-network
+    command: python scripts/migrate_data.py
+    profiles:
+      - migration
+
+volumes:
+  qdrant_data:
+    driver: local
+  redis_data:
+    driver: local
+  n8n_data:
+    driver: local
+  opik_postgres_data:
+    driver: local
+
+networks:
+  rag-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

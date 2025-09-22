@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Debug Test</title>
+</head>
+<body>
+    <h1>Chart Debug Test</h1>
+
+    <h2>Test URL from User:</h2>
+    <p>https://quickchart.io/chart?width=200&c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22Kedah%22%2C%22Selangor%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Population%202022%22%2C%22data%22%3A%5B2163.1%2C7050.3%5D%2C%22backgroundColor%22%3A%5B%22rgba(75%2C192%2C192%2C0.2)%22%2C%22rgba(255%2C99%2C132%2C0.2)%22%5D%2C%22borderColor%22%3A%5B%22rgba(75%2C192%2C192%2C1)%22%2C%22rgba(255%2C99%2C132%2C1)%22%5D%2C%22borderWidth%22%3A1%7D%5D%7D%2C%22options%22%3A%7B%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22ticks%22%3A%7B%22max%22%3A7500%2C%22min%22%3A0%2C%22stepSize%22%3A1000%2C%22beginAtZero%22%3Atrue%7D%2C%22stacked%22%3Afalse%7D%5D%2C%22xAxes%22%3A%7B%22stacked%22%3Afalse%7D%7D%2C%22plugins%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Population%20Comparison%20of%20Kedah%20and%20Selangor%20in%202022%22%7D%2C%22legend%22%3A%7B%22display%22%3Atrue%2C%22position%22%3A%22top%22%7D%7D%7D%7D</p>
+
+    <h2>Pattern Matching Test:</h2>
+    <p>Testing if this URL matches the pattern: /https?:\/\/quickchart\.io\/chart\?[^\s)]+/gi</p>
+
+    <h2>Fixed URL Test:</h2>
+    <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22Kedah%22%2C%22Selangor%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Population%202022%22%2C%22data%22%3A%5B2163.1%2C7050.3%5D%2C%22backgroundColor%22%3A%5B%22rgba(75%2C192%2C192%2C0.2)%22%2C%22rgba(255%2C99%2C132%2C0.2)%22%5D%2C%22borderColor%22%3A%5B%22rgba(75%2C192%2C192%2C1)%22%2C%22rgba(255%2C99%2C132%2C1)%22%5D%2C%22borderWidth%22%3A1%7D%5D%7D%2C%22options%22%3A%7B%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22ticks%22%3A%7B%22max%22%3A7500%2C%22min%22%3A0%2C%22stepSize%22%3A1000%2C%22beginAtZero%22%3Atrue%7D%2C%22stacked%22%3Afalse%7D%5D%2C%22xAxes%22%3A%7B%22stacked%22%3Afalse%7D%7D%2C%22plugins%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Population%20Comparison%20of%20Kedah%20and%20Selangor%20in%202022%22%7D%2C%22legend%22%3A%7B%22display%22%3Atrue%2C%22position%22%3A%22top%22%7D%7D%7D%7D&format=png"
+         alt="Fixed Chart Test"
+         style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px; margin: 10px 0;"
+         onerror="console.error('Fixed chart failed to load'); this.style.border='2px solid red'">
+
+    <h2>Original URL Test:</h2>
+    <img src="https://quickchart.io/chart?width=200&c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22Kedah%22%2C%22Selangor%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Population%202022%22%2C%22data%22%3A%5B2163.1%2C7050.3%5D%2C%22backgroundColor%22%3A%5B%22rgba(75%2C192%2C192%2C0.2)%22%2C%22rgba(255%2C99%2C132%2C0.2)%22%5D%2C%22borderColor%22%3A%5B%22rgba(75%2C192%2C192%2C1)%22%2C%22rgba(255%2C99%2C132%2C1)%22%5D%2C%22borderWidth%22%3A1%7D%5D%7D%2C%22options%22%3A%7B%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22ticks%22%3A%7B%22max%22%3A7500%2C%22min%22%3A0%2C%22stepSize%22%3A1000%2C%22beginAtZero%22%3Atrue%7D%2C%22stacked%22%3Afalse%7D%5D%2C%22xAxes%22%3A%7B%22stacked%22%3Afalse%7D%7D%2C%22plugins%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Population%20Comparison%20of%20Kedah%20and%20Selangor%20in%202022%22%7D%2C%22legend%22%3A%7B%22display%22%3Atrue%2C%22position%22%3A%22top%22%7D%7D%7D%7D"
+         alt="Original Chart Test"
+         style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px; margin: 10px 0;"
+         onerror="console.error('Original chart failed to load'); this.style.border='2px solid red'">
+
+    <p><a href="http://localhost:5178/">Back to Main App</a></p>
+</body>
+</html>

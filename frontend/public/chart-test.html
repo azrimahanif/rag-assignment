@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Test</title>
+</head>
+<body>
+    <h1>Chart URL Test</h1>
+    <p>Testing the chart URL from user example:</p>
+
+    <h2>Original URL (broken):</h2>
+    <p>The original URL would show as plain text due to double-encoding</p>
+
+    <h2>Fixed URL (should show chart):</h2>
+    <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22Kedah%22%2C%22Selangor%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Population%20in%202024%22%2C%22data%22%3A%5B2100000%2C6600000%5D%2C%22backgroundColor%22%3A%5B%22rgba(255%2C99%2C132%2C0.2)%22%2C%22rgba(54%2C162%2C235%2C0.2)%22%5D%2C%22borderColor%22%3A%5B%22rgba(255%2C99%2C132%2C1)%22%2C%22rgba(54%2C162%2C235%2C1)%22%5D%2C%22borderWidth%22%3A1%7D%5D%7D%2C%22options%22%3A%7B%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22ticks%22%3A%7B%22max%22%3A7000000%2C%22min%22%3A0%2C%22stepSize%22%3A1000000%2C%22beginAtZero%22%3Atrue%7D%2C%22stacked%22%3Afalse%7D%5D%2C%22xAxes%22%3A%7B%22stacked%22%3Afalse%7D%7D%2C%22plugins%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Population%20of%20Kedah%20and%20Selangor%20in%202024%22%7D%2C%22legend%22%3A%7B%22display%22%3Atrue%2C%22position%22%3A%22top%22%7D%7D%7D%7D&format=png"
+         alt="Population Chart Test"
+         style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px; margin: 10px 0;"
+         onerror="console.error('Chart failed to load'); this.style.border='2px solid red'">
+
+    <h2>Direct QuickChart Test (simple):</h2>
+    <img src="https://quickchart.io/chart?c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22A%22%2C%22B%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Test%22%2C%22data%22%3A%5B1%2C2%5D%7D%5D%7D%7D"
+         alt="Simple Chart Test"
+         style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px; margin: 10px 0;">
+
+    <h2>Test Summary:</h2>
+    <ul>
+        <li>If the first chart shows correctly, the double-encoding fix worked</li>
+        <li>If both charts show, the chart rendering system is working properly</li>
+        <li>The first chart should show "Population of Kedah and Selangor in 2024"</li>
+        <li>Both charts should have download functionality in the main app</li>
+    </ul>
+
+    <p><a href="http://localhost:5175/">Back to Main App</a></p>
+</body>
+</html>

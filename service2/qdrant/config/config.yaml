@@ -1,0 +1,46 @@
+# Qdrant configuration file
+service:
+  host: 0.0.0.0
+  http_port: 6333
+  grpc_port: 6334
+  max_request_size_mb: 32
+  enable_cors: true
+
+cluster:
+  enabled: false
+
+log_level: INFO
+
+storage:
+  storage_path: /qdrant/storage
+  snapshots_path: /qdrant/snapshots
+  # Performance tuning
+  max_segment_size: 1048576  # 1MB
+  vector_size: 1536
+  distance: Cosine
+
+# Performance optimizations
+optimizers:
+  deleted_threshold: 0.2
+  vacuum_threshold: 0.1
+  indexing_threshold: 20000
+  max_optimization_threads: 4
+
+# Service configuration
+service:
+  enable_cors: true
+  cors_allow_origins:
+    - "*"
+  
+# Memory limits
+memory:
+  limit: 4GB
+  cleanup_threshold: 0.85
+
+# Snapshots configuration
+snapshots:
+  creation_interval: 0  # Disabled by default
+  retention_period: 0  # Keep all snapshots
+
+# Security (for production)
+# api_key: ${QDRANT_API_KEY}

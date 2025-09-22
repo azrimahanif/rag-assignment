@@ -1,0 +1,64 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+# Keep env.example as template
+!.env.example
+
+# Claude-related files
+.claude/
+CLAUDE.md
+
+# Virtual environment
+.venv/
+chat_venv/
+env/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Debug files
+debug/
+nul
+
+# Data files (optional - add if you don't want to track large data files)
+*.csv
+*.json
+!package.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

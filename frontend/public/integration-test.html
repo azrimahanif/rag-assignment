@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .button {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Integration Test</h1>
+
+    <div class="test-section">
+        <h2>Chart Processing Test</h2>
+        <p>Testing chart URL detection and processing:</p>
+        <div id="chart-test"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Open the main app at <a href="http://localhost:5173" target="_blank">http://localhost:5173</a></li>
+            <li>Send a message that should generate a chart (like "compare population of Kedah and Selangor")</li>
+            <li>Check if the chart displays as an image (not raw URL)</li>
+            <li>Click on the source badge to see if the source panel opens</li>
+            <li>Close the source panel and try clicking it again</li>
+        </ol>
+    </div>
+
+    <script>
+        // Test the chart processing pattern
+        const testContent = `Here is the requested comparison of total population between Kedah and Selangor in 2015:
+
+**Total Population Comparison between Kedah and Selangor in 2015**
+
+Based on the available data, here are the total population figures:
+
+- **Kedah**: 2,045,300 people
+- **Selangor**: 6,231,800 people
+
+This shows that Selangor had approximately 3 times the population of Kedah in 2015.
+
+**Chart Visualization**
+https://quickchart.io/chart?width=200&c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22Kedah%22%2C%22Selangor%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Population%202015%22%2C%22data%22%3A%5B2045300%2C6231800%5D%2C%22backgroundColor%22%3A%5B%22rgba(75%2C%20192%2C%20192%2C%200.2)%22%2C%22rgba(54%2C%20162%2C%20235%2C%200.2)%22%5D%2C%22borderColor%22%3A%5B%22rgba(75%2C%20192%2C%20192%2C%201)%22%2C%22rgba(54%2C%20162%2C%20235%2C%201)%22%5D%2C%22borderWidth%22%3A1%7D%5D%7D%2C%22options%22%3A%7B%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22ticks%22%3A%7B%22max%22%3A7000000%2C%22min%22%3A0%2C%22stepSize%22%3A1000000%2C%22beginAtZero%22%3Atrue%7D%2C%22stacked%22%3Afalse%7D%5D%2C%22xAxes%22%3A%7B%22stacked%22%3Afalse%7D%7D%2C%22plugins%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Total%20Population%20Comparison%20between%20Kedah%20and%20Selangor%20in%202015%22%7D%2C%22legend%22%3A%7B%22display%22%3Atrue%2C%22position%22%3A%22top%22%7D%7D%7D%7D`;
+
+        // Test chart URL detection
+        const bareUrlPattern = /https?:\/\/quickchart\.io\/chart\?[^\s)]+/gi;
+        const matches = testContent.match(bareUrlPattern);
+
+        const chartTestDiv = document.getElementById('chart-test');
+        chartTestDiv.innerHTML = `
+            <p><strong>Chart URLs found:</strong> ${matches ? matches.length : 0}</p>
+            <p class="${matches ? 'success' : 'error'}">${matches ? '✅ Chart URL detection working' : '❌ No chart URLs found'}</p>
+            ${matches ? `<p><strong>URL:</strong> ${matches[0].substring(0, 100)}...</p>` : ''}
+        `;
+
+        console.log('🔍 Integration test page loaded');
+        console.log('🔍 Test the main app at http://localhost:5173');
+    </script>
+</body>
+</html>

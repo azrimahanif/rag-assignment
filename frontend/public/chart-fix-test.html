@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Fix Test</title>
+</head>
+<body>
+    <h1>Chart Fix Test</h1>
+
+    <h2>Test Input:</h2>
+    <pre id="testInput">Here is the requested comparison of total population between Kedah and Selangor in 2015:
+
+**Total Population Comparison between Kedah and Selangor in 2015**
+
+Based on the available data, here are the total population figures:
+
+- **Kedah**: 2,045,300 people
+- **Selangor**: 6,231,800 people
+
+This shows that Selangor had approximately 3 times the population of Kedah in 2015.
+
+**Chart Visualization**
+https://quickchart.io/chart?width=200&c=%7B%22type%22%3A%22bar%22%2C%22data%22%3A%7B%22labels%22%3A%5B%22Kedah%22%2C%22Selangor%22%5D%2C%22datasets%22%3A%5B%7B%22label%22%3A%22Population%202015%22%2C%22data%22%3A%5B2045300%2C6231800%5D%2C%22backgroundColor%22%3A%5B%22rgba(75%2C%20192%2C%20192%2C%200.2)%22%2C%22rgba(54%2C%20162%2C%20235%2C%200.2)%22%5D%2C%22borderColor%22%3A%5B%22rgba(75%2C%20192%2C%20192%2C%201)%22%2C%22rgba(54%2C%20162%2C%20235%2C%201)%22%5D%2C%22borderWidth%22%3A1%7D%5D%7D%2C%22options%22%3A%7B%22scales%22%3A%7B%22yAxes%22%3A%5B%7B%22ticks%22%3A%7B%22max%22%3A7000000%2C%22min%22%3A0%2C%22stepSize%22%3A1000000%2C%22beginAtZero%22%3Atrue%7D%2C%22stacked%22%3Afalse%7D%5D%2C%22xAxes%22%3A%7B%22stacked%22%3Afalse%7D%7D%2C%22plugins%22%3A%7B%22title%22%3A%7B%22display%22%3Atrue%2C%22text%22%3A%22Total%20Population%20Comparison%20between%20Kedah%20and%20Selangor%20in%202015%22%7D%2C%22legend%22%3A%7B%22display%22%3Atrue%2C%22position%22%3A%22top%22%7D%7D%7D%7D</pre>
+
+    <h2>Test Results:</h2>
+    <div id="testResults"></div>
+
+    <h2>Generated Chart:</h2>
+    <div id="chartContainer"></div>
+
+    <script>
+        // Simulate the chart processing logic
+        const testInput = document.getElementById('testInput').textContent;
+        const results = document.getElementById('testResults');
+        const chartContainer = document.getElementById('chartContainer');
+
+        // Test contentLikelyContainsCharts
+        const chartKeywords = [
+            '![', 'chart', 'graph', 'visualization', 'plot',
+            'quickchart.io', '{"type":', '{"data":', '{"labels":',
+            'https://', 'http://'
+        ];
+        const lowerContent = testInput.toLowerCase();
+        const likelyContainsCharts = chartKeywords.some(keyword => lowerContent.includes(keyword.toLowerCase()));
+
+        results.innerHTML += `<p><strong>contentLikelyContainsCharts:</strong> ${likelyContainsCharts}</p>`;
+
+        // Test bare URL pattern
+        const bareUrlPattern = /https?:\/\/quickchart\.io\/chart\?[^\s)]+/gi;
+        const bareUrlMatches = testInput.match(bareUrlPattern);
+
+        results.innerHTML += `<p><strong>Bare URL matches:</strong> ${bareUrlMatches ? bareUrlMatches.length : 0}</p>`;
+
+        if (bareUrlMatches) {
+            bareUrlMatches.forEach((url, index) => {
+                results.innerHTML += `<p><strong>URL ${index + 1}:</strong> ${url}</p>`;
+
+                // Create chart image
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Test Chart';
+                img.style.maxWidth = '100%';
+                img.style.border = '1px solid #ccc';
+                img.style.margin = '10px 0';
+                img.onerror = () => {
+                    img.style.border = '2px solid red';
+                    results.innerHTML += `<p style="color: red;">❌ Chart failed to load</p>`;
+                };
+                img.onload = () => {
+                    results.innerHTML += `<p style="color: green;">✅ Chart loaded successfully</p>`;
+                };
+                chartContainer.appendChild(img);
+            });
+        } else {
+            results.innerHTML += `<p style="color: red;">❌ No bare URLs found</p>`;
+        }
+
+        // Test if URL would be found after JSON extraction (simulate the fix)
+        const jsonPattern = /\{(?:[^{}]|(?:\{(?:[^{}]|(?:\{[^{}]*\}))*\}))*\}/g;
+        let jsonMatch;
+        let jsonCount = 0;
+        const processedText = testInput;
+
+        while ((jsonMatch = jsonPattern.exec(testInput)) !== null) {
+            jsonCount++;
+            const beforeText = testInput.substring(0, jsonMatch.index);
+            const afterText = testInput.substring(jsonMatch.index + jsonMatch[0].length);
+
+            const isWithinUrl =
+                beforeText.includes('quickchart.io/chart?') ||
+                beforeText.includes('?c=') ||
+                beforeText.includes('&c=') ||
+                beforeText.includes('chart?') ||
+                afterText.includes('quickchart.io') ||
+                afterText.includes('&') ||
+                afterText.includes('?');
+
+            if (isWithinUrl) {
+                results.innerHTML += `<p><strong>JSON ${jsonCount}:</strong> Skipped (within URL context)</p>`;
+            } else {
+                results.innerHTML += `<p><strong>JSON ${jsonCount}:</strong> Would be extracted</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

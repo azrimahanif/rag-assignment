@@ -1,0 +1,15 @@
+{"query": "What was Malaysia's total population in 2023?", "expected_notes": "Should return Malaysia's total population figure for 2023 from DOSM data, mention if data is not available"}
+{"query": "How many people lived in Selangor in 2024?", "expected_notes": "Should return Selangor's population count for 2024, mention if projection or actual data"}
+{"query": "What is the gender breakdown of Malaysia's population?", "expected_notes": "Should provide male/female population distribution with percentages for Malaysia"}
+{"query": "Show the age distribution in Kedah for 2023", "expected_notes": "Should display age group breakdown for Kedah in 2023 with specific numbers"}
+{"query": "What is the ethnic composition of Selangor?", "expected_notes": "Should show ethnic groups distribution in Selangor (Bumi Malay, Chinese, Indian, Others) with percentages"}
+{"query": "Compare the populations of Kedah and Selangor", "expected_notes": "Should provide comparative analysis between Kedah and Selangor populations with specific numbers"}
+{"query": "How has Malaysia's population changed from 2020 to 2024?", "expected_notes": "Should show population growth trend over 2020-2024 period with growth rate"}
+{"query": "Show population growth trends in Selangor over the last 10 years", "expected_notes": "Should display historical population trends for Selangor from 2014-2024"}
+{"query": "What percentage of Malaysia's population are elderly people (65+)?", "expected_notes": "Should calculate percentage of population aged 65 and above for Malaysia"}
+{"query": "How many young adults (20-34) live in Kedah and what's their gender breakdown?", "expected_notes": "Should provide count and gender breakdown for 20-34 age group in Kedah"}
+{"query": "What is the ratio of working-age population (15-64) to dependents in Selangor?", "expected_notes": "Should calculate dependency ratio for Selangor using working-age vs youth/elderly"}
+{"query": "How many Chinese Malaysians live in Kedah?", "expected_notes": "Should return Chinese population count for Kedah with ethnic breakdown"}
+{"query": "What's the male to female ratio in Malaysia's elderly population?", "expected_notes": "Should provide gender ratio for elderly (65+) population in Malaysia"}
+{"query": "Based on current trends, what will Malaysia's population be in 2025?", "expected_notes": "Should provide population projection for 2025 based on recent growth trends"}
+{"query": "Provide a comprehensive demographic profile of Selangor including population size, age distribution, ethnic composition, and gender breakdown", "expected_notes": "Should give complete demographic overview of Selangor with all requested breakdowns"}
