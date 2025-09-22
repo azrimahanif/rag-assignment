@@ -602,47 +602,6 @@ python run_evaluation.py
 # Results saved to evaluation/results/ directory
 ```
 
-## 🤝 Contributing
-
-### Development Guidelines
-
-1. **Branch Strategy**
-   - `main`: Production-ready code
-   - `develop`: Integration branch
-   - `feature/*`: Feature development
-   - `hotfix/*`: Critical fixes
-
-2. **Pull Request Process**
-   - Create feature branch from `develop`
-   - Implement changes with tests
-   - Update documentation
-   - Submit PR with detailed description
-   - Code review and approval
-   - Merge to `develop`
-
-3. **Quality Requirements**
-   - All tests must pass
-   - Code must meet style guidelines
-   - Documentation must be updated
-   - Performance impact assessed
-
-### Submitting Changes
-
-1. **Code Changes**
-   - Follow project coding standards
-   - Include unit tests for new features
-   - Update relevant documentation
-   - Test changes thoroughly
-
-2. **Documentation**
-   - Update README if needed
-   - Add inline code comments
-   - Document API changes
-   - Update configuration examples
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -662,30 +621,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - **Tailwind CSS** for styling
 - **Lucide React** for icons
 
-## 📞 Support
-
-### Getting Help
-- **Documentation**: Check `/docs/` directory
-- **Debug Tools**: Use `/debug/` utilities
-- **Issues**: Create GitHub issue with detailed description
-- **Discussions**: Join community discussions
-
-### Reporting Issues
-
-When reporting issues, please include:
-- Operating system and version
-- Browser and version (for frontend issues)
-- Steps to reproduce the problem
-- Expected vs actual behavior
-- Error messages and stack traces
-- Screenshots if applicable
-
-### Community
-
-- **GitHub Discussions**: Technical discussions and questions
-- **Issues**: Bug reports and feature requests
-- **Pull Requests**: Code contributions
-- **Documentation**: Improvements and corrections
 
 ---
 
