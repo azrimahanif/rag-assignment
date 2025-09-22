@@ -78,6 +78,52 @@ A comprehensive Retrieval-Augmented Generation (RAG) system for querying and vis
 - **Timeliness**: Annual updates with projections
 - **Limitations**: Limited geographic coverage (3 areas)
 
+## 🔄 Data Preparation Process
+
+### DOSM to Qdrant Pipeline
+The system processes raw DOSM population data through a sophisticated pipeline to create searchable vector embeddings:
+
+#### 1. Data Sources
+- **Malaysia API**: `https://api.data.gov.my/data-catalogue?id=population_malaysia`
+- **State Parquet**: `https://storage.dosm.gov.my/population/population_state.parquet`
+- **Coverage**: Malaysia (overall), Kedah, Selangor demographic data
+
+#### 2. Processing Pipeline
+- **Fetching**: Retrieves data from DOSM APIs and parquet files
+- **Cleaning**: Standardizes formats and handles missing values
+- **Chunking**: Groups data by year-state combinations with demographic breakdowns
+- **Embedding**: Converts text descriptions to 1536-dimensional vectors using OpenAI
+- **Storage**: Stores vectors with rich metadata in Qdrant database
+
+#### 3. Chunking Strategy: Year-State-Demographic
+- **Approach**: Creates comprehensive demographic profiles per state-year
+- **Content**: Natural language descriptions with population totals, gender/age/ethnicity breakdowns
+- **Metadata**: Structured demographic data for filtering and analysis
+- **Optimization**: Balanced chunk sizes (~800-1500 tokens) for efficient retrieval
+
+#### 4. Vector Database Schema
+- **Collection**: `dosm_population_data`
+- **Dimensions**: 1536 (OpenAI embeddings)
+- **Distance**: Cosine similarity
+- **Metadata**: State, year, demographics, data sources, ingestion timestamps
+
+#### 5. Running Data Preparation
+```bash
+# Fetch raw data
+python fetch_raw_data.py
+
+# Analyze data structure
+python analyze_data_structure.py
+
+# Prepare and store in Qdrant
+python prepare_data.py
+```
+
+### Key Processing Scripts
+- `fetch_raw_data.py`: Retrieves and exports raw DOSM data
+- `analyze_data_structure.py`: Analyzes data patterns and chunking strategies
+- `prepare_data.py`: Complete pipeline from raw data to vector embeddings
+
 ## 🚀 Quick Start
 
 ### Prerequisites
